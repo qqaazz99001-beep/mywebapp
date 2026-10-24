@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - 大魔王 Faker 傳奇殿堂{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+        <div class="card card-faker p-4 p-md-5">
+            <div class="mb-3">
+                <span class="badge bg-danger me-2">{{ post.badge }}</span>
+                <span class="badge bg-dark border border-warning text-gold">{{ post.hero }}</span>
+            </div>
+
+            <!-- 欄位 1: title -->
+            <h1 class="h2 fw-bold text-light mb-3">{{ post.title }}</h1>
+
+            <!-- 欄位 2: author -->
+            <div class="p-3 mb-4 rounded bg-dark border-start border-4 border-warning">
+                <span class="text-warning fw-bold">{{ post.author }}</span>
+            </div>
+
+            <!-- 欄位 3: content (完整內文) -->
+            <div class="text-light" style="font-size: 1.15rem; line-height: 2; white-space: pre-line;">
+                {{ post.content }}
+            </div>
+
+            <hr class="my-4 border-secondary">
+            
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="/" class="btn btn-outline-light">← 返回戰役列表</a>
+                <span class="text-secondary small">THE UNKILLABLE DEMON KING · FAKER</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

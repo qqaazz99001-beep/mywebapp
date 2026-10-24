@@ -1,22 +1,75 @@
-from flask import Flask
+from flask import Flask, render_template, abort
 
 app = Flask(__name__)
 
-# 首頁路由
+# 大魔王 Faker 傳奇資料庫（嚴格包含題目規定的 title, author, content 三個欄位）
+POSTS = [
+    {
+        "id": 1,
+        "title": "【2013 雙劫大戰】岳倫一生之痛：殘血反殺 Ryu 封神之戰",
+        "author": "經典名言：「Faker what was that?!」- 賽評 DoA",
+        "content": "2013 年 OGN 夏季總決賽第五局盲選局，SKT T1 對陣 KT Rolster。Faker 使用劫（Zed）在血量僅剩三分之一的極限狀態下，遭遇滿血的 Ryu。Faker 憑藉神級走位、水銀飾帶秒解印記、大招影子互換與精準技能預判，在敵方防禦塔下完成了英雄聯盟史上最震撼的「殘血反殺滿血」！這一幕直接讓 Ryu 抱頭懷疑人生，也宣告了「不死大魔王」統治時代的降臨。",
+        "badge": "初代封神",
+        "hero": "影忍之足 · 劫"
+    },
+    {
+        "id": 2,
+        "title": "【2017 加里歐一保四】五把正義降臨，燃盡心血的英雄輓歌",
+        "author": "選手稱號：燃燒靈魂的護國神像 / 孤勇者",
+        "content": "2017 年全球總決賽四強戰面對全盛時期的 RNG，在隊友狀態起伏、隊伍陷入絕境之時，Faker 毅然決然連續五把鎖下加里歐（Galio）。他以肉身全圖支援、精準大招護盾與極限開團，硬生生將 SKT 扛進了鳥巢決賽。雖然最終在決賽落敗，但「五把加里歐」的極致個人實力秀，成為所有電競迷心中最悲壯且肅然起敬的傳奇篇章。",
+        "badge": "巔峰悲壯",
+        "hero": "正義巨像 · 加里歐"
+    },
+    {
+        "id": 3,
+        "title": "【2023 終極一推】「這個第四冠，是為了我的隊友而戰」",
+        "author": "經典名言：「以前是為了證明自己，這冠是為了隊友。」- Faker",
+        "content": "沉寂七年、歷經手傷與質疑，Faker 在 2023 世界賽帶領 T1 青年軍殺回巔峰。四強面對氣勢如虹的 JDG，在第三局決定勝負的關鍵小龍團戰中，Faker 的阿祈爾（Azir）在極限視角閃現大招「禁軍統領」，秒速回推敵方核心射手 Ruler，一錘定音擊潰最強強敵！賽後採訪中，曾四度登頂的他淡然說道：「第一、二、三個冠軍是為了證明自己，而第四個冠軍，是為了我的隊友而拿。」",
+        "badge": "四冠歸來",
+        "hero": "沙漠皇帝 · 阿祈爾"
+    },
+    {
+        "id": 4,
+        "title": "【2024 倫敦五冠加冕】英雄再次登場！塞勒斯逆天改命奪 FMVP",
+        "author": "傳世語錄：「只要我還在打，T1 的王朝就沒有終點。」",
+        "content": "2024 年全球總決賽倫敦 O2 決賽，T1 陷入 1:2 絕境。第四局 Faker 掏出睽違多年的本命加里歐挽狂瀾於既倒；決勝局再選出塞勒斯（Sylas），在小龍坑閃現偷取銳兒大招團滅對手，時隔八年再次斬獲決賽 FMVP，豪取個人第 5 座召喚師金盃，讓全世界召喚師見證了何謂無可撼動的電競圖騰。",
+        "badge": "五冠神話",
+        "hero": "解脫者 · 塞勒斯"
+    },
+    {
+        "id": 5,
+        "title": "【2025 六冠空前絕後】登峰造極境！無人能及的第六座召喚師金盃",
+        "author": "傳奇封號：真正的電競歷史 GOAT · 六冠不死大魔王",
+        "content": "2025 年全球總決賽，Faker 與 T1 再度粉碎了所有「狀態下滑」與「老將遲暮」的質疑。李相赫在世界賽舞台展現了極致的戰術大腦與英雄海，以絕對宰制力帶領隊伍一路過關斬將，正式摘下職業生涯第 6 座全球總決賽冠軍金盃！從 2013 到 2025，橫跨十二載的統治，讓這項紀錄成為電競史上後人永遠無法企及的巍峨高山。",
+        "badge": "六冠傳奇",
+        "hero": "傳奇殿堂 · 李相赫"
+    },
+    {
+        "id": 6,
+        "title": "【大魔王私下傳說】一個月花五千、四人分喝一罐可樂的節儉神話",
+        "author": "生活稱號：電競苦行僧 / 盆栽大師 李相赫",
+        "content": "身價數百億韓元、擁有首爾大樓「Faker Tower」的李哥，私底下卻過著近乎苦行僧的生活。每個月個人開銷僅約台幣 5000 元，平時穿戰隊贊助服、買飲料四人喝一罐；玩遊戲堅持用原造型。但面對公益慈善時，他卻毫不猶豫地累計捐出數億韓元，完美體現了歷史第一人的人格魅力。",
+        "badge": "私服傳奇",
+        "hero": "原皮戰神 · 李相赫"
+    }
+]
+
+# 路由設定
 @app.route('/')
-def hello():
-    return 'Hello, World!'
-
-# /home 路由
-@app.route('/home')
 def home():
-    return '<h1>Home Page</h1>'
+    return render_template('index.html', posts=POSTS)
 
-# /about 路由
+@app.route('/post/<int:post_id>')
+def post_detail(post_id):
+    post = next((p for p in POSTS if p["id"] == post_id), None)
+    if not post:
+        abort(404)
+    return render_template('post.html', post=post)
+
 @app.route('/about')
 def about():
-    return '<h1>About Page</h1>'
+    return render_template('base.html', about_mode=True)
 
+# 伺服器啟動指令
 if __name__ == '__main__':
-    # debug=True 方便開發時存檔自動重啟並顯示錯誤
     app.run(debug=True)

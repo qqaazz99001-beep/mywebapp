@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}大魔王 Faker 傳奇殿堂大事記{% endblock %}</title>
+    <!-- 引入 Bootstrap 5 美化樣式 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --t1-red: #E4002B;
+            --t1-gold: #D4AF37;
+            --bg-dark: #0D1117;
+            --card-dark: #161B22;
+            --border-color: #30363D;
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: #C9D1D9;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar-custom {
+            background: rgba(13, 17, 23, 0.95);
+            border-bottom: 2px solid var(--t1-red);
+        }
+        .text-gold { color: var(--t1-gold) !important; }
+        .text-red { color: var(--t1-red) !important; }
+        .card-faker {
+            background-color: var(--card-dark);
+            border: 1px solid var(--border-color);
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .card-faker:hover {
+            transform: translateY(-5px);
+            border-color: var(--t1-red);
+            box-shadow: 0 8px 24px rgba(228, 0, 43, 0.25);
+        }
+        .btn-t1 {
+            background: linear-gradient(135deg, var(--t1-red), #99001A);
+            color: #FFFFFF;
+            border: none;
+            font-weight: 600;
+        }
+        .btn-t1:hover {
+            background: linear-gradient(135deg, #FF1E47, var(--t1-red));
+            color: #FFFFFF;
+        }
+        footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border-color);
+            background-color: #0A0D12;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部導覽列 -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-red" href="/">
+                🏆 THE UNKILLABLE DEMON KING <span class="badge bg-danger ms-1">FAKER</span>
+            </a>
+            <div class="ms-auto d-flex gap-2">
+                <a href="/" class="btn btn-outline-light btn-sm">大事記首頁</a>
+                <a href="/about" class="btn btn-outline-warning btn-sm">關於李相赫</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容抽換區 -->
+    <main class="container my-5">
+        {% block content %}
+            {% if about_mode %}
+            <div class="card card-faker p-4 text-center">
+                <h2 class="text-gold fw-bold mb-3">Lee Sang-hyeok (이상혁)</h2>
+                <p class="lead text-light">司職中路，首位入選《英雄聯盟》傳奇殿堂（Hall of Legends）的歷史第一人 GOAT。</p>
+                
+                <!-- 六冠傳奇榮譽牆 -->
+                <div class="row g-3 justify-content-center my-4">
+                    <div class="col-md-3"><div class="p-3 border border-secondary rounded">👑 <strong>6 座全球總決賽冠軍 (六冠神話)</strong></div></div>
+                    <div class="col-md-3"><div class="p-3 border border-secondary rounded">🏆 <strong>2 次 MSI 季中邀請賽冠軍</strong></div></div>
+                    <div class="col-md-3"><div class="p-3 border border-secondary rounded">🌟 <strong>10 次 LCK 聯賽冠軍</strong></div></div>
+                </div>
+
+                <div class="mt-2">
+                    <a href="/" class="btn btn-t1">返回大事記首頁</a>
+                </div>
+            </div>
+            {% endif %}
+        {% endblock %}
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="py-4 text-center text-secondary">
+        <div class="container">
+            <small>大魔王 Faker 傳奇殿堂部落格 · Python Flask + Jinja2 樣板 · 部署於 Render.com</small>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
