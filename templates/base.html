@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}大魔王 Faker 傳奇殿堂大事記{% endblock %}</title>
-    <!-- 引入 Bootstrap 5 美化樣式 -->
+    <!-- 正確的 Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         :root {
@@ -31,6 +31,7 @@
         .card-faker {
             background-color: var(--card-dark);
             border: 1px solid var(--border-color);
+            color: #F0F6FC !important;
             transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         }
         .card-faker:hover {
@@ -79,10 +80,23 @@
                 <p class="lead text-light">司職中路，首位入選《英雄聯盟》傳奇殿堂（Hall of Legends）的歷史第一人 GOAT。</p>
                 
                 <!-- 六冠傳奇榮譽牆 -->
-                <div class="row g-3 justify-content-center my-4">
-                    <div class="col-md-3"><div class="p-3 border border-secondary rounded">👑 <strong>6 座全球總決賽冠軍 (六冠神話)</strong></div></div>
-                    <div class="col-md-3"><div class="p-3 border border-secondary rounded">🏆 <strong>2 次 MSI 季中邀請賽冠軍</strong></div></div>
-                    <div class="col-md-3"><div class="p-3 border border-secondary rounded">🌟 <strong>10 次 LCK 聯賽冠軍</strong></div></div>
+                <div class="row g-3 justify-content-center my-4 text-light">
+                    <div class="col-md-3">
+                        <div class="p-3 border border-secondary rounded bg-dark">
+                            👑 <strong class="text-warning">6 座全球總決賽冠軍</strong><br>
+                            <small class="text-secondary">(六冠神話)</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="p-3 border border-secondary rounded bg-dark">
+                            🏆 <strong class="text-white">2 次 MSI 季中邀請賽冠軍</strong>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="p-3 border border-secondary rounded bg-dark">
+                            🌟 <strong class="text-white">10 次 LCK 聯賽冠軍</strong>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="mt-2">
@@ -100,6 +114,7 @@
         </div>
     </footer>
 
+    <!-- 正確的 Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
